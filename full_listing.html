@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full module listing &mdash; A301</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=864ff2f9"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Home
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Full module listing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-a301_extras.sat_lib">sat_lib module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_bool_mask"><code class="docutils literal notranslate"><span class="pre">make_bool_mask()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_dataset"><code class="docutils literal notranslate"><span class="pre">make_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_false_color"><code class="docutils literal notranslate"><span class="pre">make_false_color()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-a301_extras.thermo_utils">thermo_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.thermo_utils.calcDensHeight"><code class="docutils literal notranslate"><span class="pre">calcDensHeight()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.thermo_utils.calcScaleHeight"><code class="docutils literal notranslate"><span class="pre">calcScaleHeight()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-a301_extras.plot_utils">plot_utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.plot_utils.make_pal"><code class="docutils literal notranslate"><span class="pre">make_pal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.plot_utils.rowcol2latlon"><code class="docutils literal notranslate"><span class="pre">rowcol2latlon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Home</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Full module listing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/full_listing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="full-module-listing">
+<h1>Full module listing<a class="headerlink" href="#full-module-listing" title="Link to this heading"></a></h1>
+<section id="module-a301_extras.sat_lib">
+<span id="sat-lib-module"></span><h2>sat_lib module<a class="headerlink" href="#module-a301_extras.sat_lib" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.make_bool_mask">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">make_bool_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da_fmask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">uint8</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#make_bool_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.make_bool_mask" title="Link to this definition"></a></dt>
+<dd><p>‘
+turn a Landsat fmask into a boolean 1/0 array where
+cloud-free land pixels are 1 and all other pixels are 0
+For use by skimage.exposure.equalize_hist</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>da_fmask</strong> (<em>the fmask DataArray</em>)</p></li>
+<li><p><strong>Returns</strong> (<em>bool_mask with the same shape</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.make_dataset">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">make_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scene_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dataset</span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#make_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.make_dataset" title="Link to this definition"></a></dt>
+<dd><p>given a dictionary with landsat bands stored as rioxarray, keyed by
+the band name, return an rioxarray dataset containing all the bands
+plus metadata</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scene_dict</strong> (<em>dictionary with keys like 'B03'</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ds_allbands</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>xarray dataset with all bands from the dictionary stored as variables</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.make_false_color">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">make_false_color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">the_ds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">band_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataArray</span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#make_false_color"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.make_false_color" title="Link to this definition"></a></dt>
+<dd><p>given a landsat dataset created with at least an fmask and 3 bands,
+return a histogram-equalized false color image with rgb mapped
+to the bands in the order they appear in the list band_names</p>
+<p>example usage:</p>
+<p>landsat_654 = make_false_color(the_ds,[‘B06’,’B05’,’B04’])</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>the_ds</strong> – created by make_dataset – must contain at least 3 bands and Fmask</p></li>
+<li><p><strong>band_names</strong> – list of strings with the names of the bands to be mapped to red, green and blue</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>false_color</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>rioxarray with shape [3,nrows,ncols] that can be converted to png</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-a301_extras.thermo_utils">
+<span id="thermo-utils-module"></span><h2>thermo_utils module<a class="headerlink" href="#module-a301_extras.thermo_utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.thermo_utils.calcDensHeight">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.thermo_utils.</span></span><span class="sig-name descname"><span class="pre">calcDensHeight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/a301_extras/thermo_utils.html#calcDensHeight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.thermo_utils.calcDensHeight" title="Link to this definition"></a></dt>
+<dd><p>Calculate the density scale height H_rho</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>)</p></li>
+<li><p><strong>columns</strong> (<em>df</em>) – <dl class="simple">
+<dt>T: vector (float)</dt><dd><p>temperature (K)</p>
+</dd>
+<dt>p: vector (float) of len(T)</dt><dd><p>pressure (pa)</p>
+</dd>
+<dt>z: vector (float) of len(T</dt><dd><p>height (m)</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Hbar</strong> – density scale height (m)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>vector (float) of len(T)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.thermo_utils.calcScaleHeight">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.thermo_utils.</span></span><span class="sig-name descname"><span class="pre">calcScaleHeight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/a301_extras/thermo_utils.html#calcScaleHeight"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.thermo_utils.calcScaleHeight" title="Link to this definition"></a></dt>
+<dd><p>Calculate the pressure scale height H_p</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>)</p></li>
+<li><p><strong>columns</strong> – <dl class="simple">
+<dt>T: vector (float)</dt><dd><p>temperature (K)</p>
+</dd>
+<dt>p: vector (float) of len(T)</dt><dd><p>pressure (pa)</p>
+</dd>
+<dt>z: vector (float) of len(T</dt><dd><p>height (m)</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Hbar</strong> – pressure scale height (m)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>vector (float) of len(T)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-a301_extras.plot_utils">
+<span id="plot-utils-module"></span><h2>plot_utils module<a class="headerlink" href="#module-a301_extras.plot_utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.plot_utils.make_pal">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.plot_utils.</span></span><span class="sig-name descname"><span class="pre">make_pal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">palette</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/a301_extras/plot_utils.html#make_pal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.plot_utils.make_pal" title="Link to this definition"></a></dt>
+<dd><p>return a dictionary containing a palette and a Normalize object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vmin</strong> (<em>minimum colorbar value</em><em> (</em><em>optional</em><em>, </em><em>defaults to minimum data value</em><em>)</em>)</p></li>
+<li><p><strong>vmax</strong> (<em>maximum colorbar value</em><em> (</em><em>optional</em><em>, </em><em>defaults to maximum data value</em><em>)</em>)</p></li>
+<li><p><strong>palette</strong> (<em>string</em><em> (</em><em>optional</em><em>, </em><em>defaults to &quot;viridis&quot;</em><em>)</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>out_dict</strong> – dictionary with key:values  cmap:colormap, norm:Normalize</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.plot_utils.rowcol2latlon">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.plot_utils.</span></span><span class="sig-name descname"><span class="pre">rowcol2latlon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tiffile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/a301_extras/plot_utils.html#rowcol2latlon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.plot_utils.rowcol2latlon" title="Link to this definition"></a></dt>
+<dd><p>return the latitude and longitude of a row and column in a geotif</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tiffile</strong> (<em>Path object</em>) – path to a clipped tiffile</p></li>
+<li><p><strong>row</strong> (<em>float</em>) – row of the pixel</p></li>
+<li><p><strong>col</strong> (<em>float</em>) – column of the pixel</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>(lon, lat)</strong> – longitude (deg east) and latitude (deg north) on
+a WGS84 datum</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(float, float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, phaustin.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
