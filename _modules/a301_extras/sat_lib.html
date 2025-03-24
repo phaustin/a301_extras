@@ -29,7 +29,7 @@
           
           
           <a href="../../index.html" class="icon icon-home">
-            Home
+            A301 libraries
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -40,7 +40,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../full_listing.html">Full module listing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full_listing.html">A301 modules</a></li>
 </ul>
 
         </div>
@@ -49,7 +49,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Home</a>
+          <a href="../../index.html">A301 libraries</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -71,6 +71,9 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">exposure</span><span class="p">,</span> <span class="n">img_as_ubyte</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+
 
 <div class="viewcode-block" id="make_dataset">
 <a class="viewcode-back" href="../../full_listing.html#a301_extras.sat_lib.make_dataset">[docs]</a>
@@ -207,6 +210,56 @@
     <span class="n">false_color</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">write_transform</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">false_color</span></div>
 
+
+<div class="viewcode-block" id="mask_image">
+<a class="viewcode-back" href="../../full_listing.html#a301_extras.sat_lib.mask_image">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mask_image</span><span class="p">(</span>
+    <span class="n">image_da</span><span class="p">:</span><span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span>
+    <span class="n">fmask_da</span><span class="p">:</span><span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span><span class="p">,</span>
+    <span class="n">mask_value</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    given an image, a bit mask, and a mask value, </span>
+<span class="sd">    return the modified image with all masked values set to np.nan</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    image_da: a rioxarray data array with a single band image</span>
+<span class="sd">    fmask_da: landsat fmask with the same bounding box</span>
+<span class="sd">    mask_value: bits to mask, like  0b00100011</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    masked_da: a copy of image_da array </span>
+<span class="sd">    with masked values set to np.nan</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">scene_mask</span> <span class="o">=</span> <span class="n">fmask_da</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">ref_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">fmask_da</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">ref_mask</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask_value</span>
+    <span class="n">masked_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">scene_mask</span><span class="p">,</span><span class="n">ref_mask</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="c1"># change all masked values to placeholder</span>
+    <span class="c1">#</span>
+    <span class="n">hit</span> <span class="o">=</span> <span class="n">masked_values</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="n">masked_values</span><span class="p">[</span><span class="n">hit</span><span class="p">]</span><span class="o">=</span> <span class="mi">40</span>  <span class="c1">#placeholder</span>
+    <span class="n">fmask_float</span> <span class="o">=</span> <span class="n">masked_values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="c1">#</span>
+    <span class="c1"># bad pixels are all 40</span>
+    <span class="c1">#</span>
+    <span class="n">fmask_float</span><span class="p">[</span><span class="n">fmask_float</span> <span class="o">==</span> <span class="mi">40</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="c1">#</span>
+    <span class="c1"># good pixels are all zero</span>
+    <span class="c1">#</span>
+    <span class="n">fmask_float</span><span class="p">[</span><span class="n">fmask_float</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">#</span>
+    <span class="c1"># return the masked image</span>
+    <span class="c1">#</span>
+    <span class="n">image_copy</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">image_da</span><span class="p">)</span>
+    <span class="n">image_copy</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">image_da</span><span class="o">.</span><span class="n">data</span><span class="o">*</span><span class="n">fmask_float</span>
+    <span class="k">return</span> <span class="n">image_copy</span></div>
+
+    
 </pre></div>
 
            </div>
@@ -216,7 +269,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, phaustin.</p>
+    <p>&#169; Copyright 2025, phaustin.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
