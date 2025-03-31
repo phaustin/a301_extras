@@ -223,3 +223,4 @@ def make_new_rioxarray(
     if missing is not None:
         rio_da = rio_da.rio.set_nodata(missing)
     return rio_da
+
