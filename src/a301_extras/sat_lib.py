@@ -1,8 +1,13 @@
 import xarray
+import rioxarray
 from numpy.typing import NDArray
 import numpy as np
 from skimage import exposure, img_as_ubyte
 from copy import deepcopy
+import pyproj
+import affine
+
+
 
 
 def make_dataset(
@@ -178,3 +183,43 @@ def mask_image(
     image_copy.data = image_da.data*fmask_float
     return image_copy
     
+
+
+def make_new_rioxarray(
+    rawdata: np.ndarray,
+    coords: dict,
+    dims: tuple,
+    crs: pyproj.CRS,
+    transform: affine.Affine,
+    attrs: dict | None = None,
+    missing: float | None = None,
+    name: str | None = "name_here") -> xarray.DataArray:
+    """
+    create a new rioxarray from an ndarray plus components
+
+    Parameters
+    ----------
+
+    rawdata: numpy array
+    crs: pyproj crs for scene
+    coords: xarray coordinate dict
+    dims: x and y dimension names from coorcds
+    transform: scene affine transform
+    attrs: optional attribute dictionary
+    missing: optional missing value
+    name: optional variable name, defaults to "name_here"
+
+    Returns
+    -------
+
+    rio_da: a new rioxarray
+    """
+    rio_da=xarray.DataArray(rawdata.data,coords=coords,
+                            dims=dims,name=name)
+    rio_da.rio.write_crs(crs, inplace=True)
+    rio_da.rio.write_transform(transform, inplace=True)
+    if attrs is not None:
+        rio_da=rio_da.assign_attrs(attrs)
+    if missing is not None:
+        rio_da = rio_da.rio.set_nodata(missing)
+    return rio_da
