@@ -44,9 +44,13 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">A301 modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-a301_extras.sat_lib">sat_lib module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.get_affine"><code class="docutils literal notranslate"><span class="pre">get_affine()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.get_goes"><code class="docutils literal notranslate"><span class="pre">get_goes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.get_rowcol"><code class="docutils literal notranslate"><span class="pre">get_rowcol()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_bool_mask"><code class="docutils literal notranslate"><span class="pre">make_bool_mask()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_dataset"><code class="docutils literal notranslate"><span class="pre">make_dataset()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_false_color"><code class="docutils literal notranslate"><span class="pre">make_false_color()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.make_new_rioxarray"><code class="docutils literal notranslate"><span class="pre">make_new_rioxarray()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#a301_extras.sat_lib.mask_image"><code class="docutils literal notranslate"><span class="pre">mask_image()</span></code></a></li>
 </ul>
 </li>
@@ -92,6 +96,53 @@
 <h1>A301 modules<a class="headerlink" href="#a301-modules" title="Link to this heading"></a></h1>
 <section id="module-a301_extras.sat_lib">
 <span id="sat-lib-module"></span><h2>sat_lib module<a class="headerlink" href="#module-a301_extras.sat_lib" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.get_affine">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">get_affine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sat_da</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Affine</span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#get_affine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.get_affine" title="Link to this definition"></a></dt>
+<dd><p>Creates an affine transform given a raster xarray.DataArray with
+x and y dimensions and coordinates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sat_da</strong> (<em>satellite raster with x and y dimensions</em>)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>affine_transform</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a affine transform with pixel dimensions and the ul corner</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.get_goes">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">get_goes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">satellite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'goes16'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">product</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'ABI-L2-MCMIP'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'C'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#get_goes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.get_goes" title="Link to this definition"></a></dt>
+<dd><p>get a goes image guse goes_nearesttime</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timestamp</strong> (<em>pandas timestamp for image time: format pd.Timestamp</em><em>(</em><em>'2024-12-13 22:50:35.447906'</em><em>)</em>)</p></li>
+<li><p><strong>satelite</strong> (<em>one</em><em> of </em><em>'goes16'</em><em>, </em><em>'goes18'</em><em>, </em><em>'goes19'</em><em> (</em><em>defaults to goes16</em><em>)</em>)</p></li>
+<li><p><strong>product</strong> (<em>noaa product string from AWS list</em><em> (</em><em>defaults to ABI-L2-MCMIP</em><em>)</em>)</p></li>
+<li><p><strong>domain</strong> (<em>image domain one</em><em> of </em><em>&quot;F&quot;</em><em> (</em><em>full</em><em>)</em><em>, </em><em>&quot;C&quot;</em><em> (</em><em>conus</em><em>)</em><em>, </em><em>&quot;M&quot;</em><em> (</em><em>mesoscale</em><em>)</em>)</p></li>
+<li><p><strong>download</strong> (<em>True to save file</em><em>, </em><em>False to list path</em><em> (</em><em>defaults to True</em><em>)</em>)</p></li>
+<li><p><strong>save_dir</strong> (<em>optional directory to save image</em><em> (</em><em>defaults to ~/data</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>the_path</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>path to netcdf file written in the save_dir folder</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.get_rowcol">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">get_rowcol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">affine_transform:</span> <span class="pre">~affine.Affine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_coords:</span> <span class="pre">~numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_coords:</span> <span class="pre">~numpy.array)</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'int'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'int'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#get_rowcol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.get_rowcol" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="a301_extras.sat_lib.make_bool_mask">
 <span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">make_bool_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">da_fmask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dtype</span><span class="p"><span class="pre">[</span></span><span class="pre">uint8</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#make_bool_mask"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.make_bool_mask" title="Link to this definition"></a></dt>
@@ -148,6 +199,32 @@ to the bands in the order they appear in the list band_names</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>rioxarray with shape [3,nrows,ncols] that can be converted to png</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="a301_extras.sat_lib.make_new_rioxarray">
+<span class="sig-prename descclassname"><span class="pre">a301_extras.sat_lib.</span></span><span class="sig-name descname"><span class="pre">make_new_rioxarray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rawdata</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coords</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CRS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Affine</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'name_here'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataArray</span></span></span><a class="reference internal" href="_modules/a301_extras/sat_lib.html#make_new_rioxarray"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#a301_extras.sat_lib.make_new_rioxarray" title="Link to this definition"></a></dt>
+<dd><p>create a new rioxarray from an ndarray plus components</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rawdata</strong> (<em>numpy array</em>)</p></li>
+<li><p><strong>crs</strong> (<em>pyproj crs for scene</em>)</p></li>
+<li><p><strong>coords</strong> (<em>xarray coordinate dict</em>)</p></li>
+<li><p><strong>dims</strong> (<em>x and y dimension names from coorcds</em>)</p></li>
+<li><p><strong>transform</strong> (<em>scene affine transform</em>)</p></li>
+<li><p><strong>attrs</strong> (<em>optional attribute dictionary</em>)</p></li>
+<li><p><strong>missing</strong> (<em>optional missing value</em>)</p></li>
+<li><p><strong>name</strong> (<em>optional variable name</em><em>, </em><em>defaults to &quot;name_here&quot;</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>rio_da</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a new rioxarray</p>
 </dd>
 </dl>
 </dd></dl>

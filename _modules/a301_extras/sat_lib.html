@@ -69,10 +69,20 @@
              
   <h1>Source code for a301_extras.sat_lib</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">xarray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rioxarray</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpy.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDArray</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">skimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">exposure</span><span class="p">,</span> <span class="n">img_as_ubyte</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pyproj</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">affine</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">goes2go</span><span class="w"> </span><span class="kn">import</span> <span class="n">goes_nearesttime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+
+
+
+
 
 
 <div class="viewcode-block" id="make_dataset">
@@ -260,6 +270,126 @@
     <span class="k">return</span> <span class="n">image_copy</span></div>
 
     
+
+
+<div class="viewcode-block" id="make_new_rioxarray">
+<a class="viewcode-back" href="../../full_listing.html#a301_extras.sat_lib.make_new_rioxarray">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_new_rioxarray</span><span class="p">(</span>
+    <span class="n">rawdata</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">coords</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">dims</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">,</span>
+    <span class="n">crs</span><span class="p">:</span> <span class="n">pyproj</span><span class="o">.</span><span class="n">CRS</span><span class="p">,</span>
+    <span class="n">transform</span><span class="p">:</span> <span class="n">affine</span><span class="o">.</span><span class="n">Affine</span><span class="p">,</span>
+    <span class="n">attrs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">missing</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;name_here&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    create a new rioxarray from an ndarray plus components</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    rawdata: numpy array</span>
+<span class="sd">    crs: pyproj crs for scene</span>
+<span class="sd">    coords: xarray coordinate dict</span>
+<span class="sd">    dims: x and y dimension names from coorcds</span>
+<span class="sd">    transform: scene affine transform</span>
+<span class="sd">    attrs: optional attribute dictionary</span>
+<span class="sd">    missing: optional missing value</span>
+<span class="sd">    name: optional variable name, defaults to &quot;name_here&quot;</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    rio_da: a new rioxarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rio_da</span><span class="o">=</span><span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">rawdata</span><span class="o">.</span><span class="n">data</span><span class="p">,</span><span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span>
+                            <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">rio_da</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">write_crs</span><span class="p">(</span><span class="n">crs</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">rio_da</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">write_transform</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">attrs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rio_da</span><span class="o">=</span><span class="n">rio_da</span><span class="o">.</span><span class="n">assign_attrs</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">missing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rio_da</span> <span class="o">=</span> <span class="n">rio_da</span><span class="o">.</span><span class="n">rio</span><span class="o">.</span><span class="n">set_nodata</span><span class="p">(</span><span class="n">missing</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rio_da</span></div>
+
+
+
+<div class="viewcode-block" id="get_goes">
+<a class="viewcode-back" href="../../full_listing.html#a301_extras.sat_lib.get_goes">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_goes</span><span class="p">(</span>
+        <span class="n">timestamp</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">,</span>
+        <span class="n">satellite</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;goes16&quot;</span><span class="p">,</span>
+        <span class="n">product</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;ABI-L2-MCMIP&quot;</span><span class="p">,</span>
+        <span class="n">domain</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span>
+        <span class="n">download</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">save_dir</span><span class="p">:</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    get a goes image guse goes_nearesttime</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    timestamp: pandas timestamp for image time: format pd.Timestamp(&#39;2024-12-13 22:50:35.447906&#39;)</span>
+<span class="sd">    satelite:  one of &#39;goes16&#39;, &#39;goes18&#39;, &#39;goes19&#39; (defaults to goes16)</span>
+<span class="sd">    product:  noaa product string from AWS list (defaults to ABI-L2-MCMIP)</span>
+<span class="sd">    domain: image domain one of &quot;F&quot; (full), &quot;C&quot; (conus), &quot;M&quot; (mesoscale)</span>
+<span class="sd">    download: True to save file, False to list path (defaults to True)</span>
+<span class="sd">    save_dir: optional directory to save image (defaults to ~/data</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    the_path: path to netcdf file written in the save_dir folder    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">goes_nearesttime</span><span class="p">(</span>
+        <span class="n">timestamp</span><span class="p">,</span> <span class="n">satellite</span><span class="o">=</span><span class="n">satellite</span><span class="p">,</span><span class="n">product</span><span class="o">=</span><span class="n">product</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span> 
+          <span class="n">return_as</span><span class="o">=</span><span class="s2">&quot;xarray&quot;</span><span class="p">,</span> <span class="n">save_dir</span> <span class="o">=</span> <span class="n">save_dir</span><span class="p">,</span> <span class="n">download</span> <span class="o">=</span> <span class="n">download</span><span class="p">,</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">the_path</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">the_path</span></div>
+
+
+<div class="viewcode-block" id="get_affine">
+<a class="viewcode-back" href="../../full_listing.html#a301_extras.sat_lib.get_affine">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_affine</span><span class="p">(</span>
+        <span class="n">sat_da</span><span class="p">:</span> <span class="n">xarray</span><span class="o">.</span><span class="n">DataArray</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">affine</span><span class="o">.</span><span class="n">Affine</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates an affine transform given a raster xarray.DataArray with</span>
+<span class="sd">    x and y dimensions and coordinates</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sat_da: satellite raster with x and y dimensions</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    affine_transform: a affine transform with pixel dimensions and the ul corner</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resolutionx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">sat_da</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">resolutiony</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">sat_da</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
+    <span class="n">ul_x</span> <span class="o">=</span> <span class="n">sat_da</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">ul_y</span> <span class="o">=</span> <span class="n">sat_da</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">affine_transform</span> <span class="o">=</span> <span class="n">affine</span><span class="o">.</span><span class="n">Affine</span><span class="p">(</span><span class="n">resolutionx</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">ul_x</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">resolutiony</span><span class="p">,</span> <span class="n">ul_y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">affine_transform</span></div>
+
+
+<div class="viewcode-block" id="get_rowcol">
+<a class="viewcode-back" href="../../full_listing.html#a301_extras.sat_lib.get_rowcol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_rowcol</span><span class="p">(</span>
+        <span class="n">affine_transform</span><span class="p">:</span> <span class="n">affine</span><span class="o">.</span><span class="n">Affine</span><span class="p">,</span>
+        <span class="n">x_coords</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+        <span class="n">y_coords</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">)</span><span class="o">-&gt;</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_col</span><span class="p">,</span> <span class="n">image_row</span> <span class="o">=</span> <span class="o">~</span><span class="n">affine_transform</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_coords</span><span class="p">,</span><span class="n">y_coords</span><span class="p">)</span>
+    <span class="n">image_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">image_col</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">image_row</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">image_row</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image_col</span><span class="p">,</span><span class="n">image_row</span></div>
+
 </pre></div>
 
            </div>
