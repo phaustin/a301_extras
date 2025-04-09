@@ -6,6 +6,11 @@ from skimage import exposure, img_as_ubyte
 from copy import deepcopy
 import pyproj
 import affine
+from goes2go import goes_nearesttime
+import pandas as pd
+import pathlib
+
+
 
 
 
@@ -224,3 +229,49 @@ def make_new_rioxarray(
         rio_da = rio_da.rio.set_nodata(missing)
     return rio_da
 
+
+def get_goes(
+        timestamp: pd.Timestamp,
+        satellite: str | None = "goes16",
+        product: str | None = "ABI-L2-MCMIP",
+        domain: str | None = "C",
+        download: bool | None=True,
+        save_dir: pathlib.Path | None = None
+        ) -> str:
+    """
+    get a goes image guse goes_nearesttime
+
+    Parameters
+    ----------
+    timestamp: pandas timestamp for image time: format pd.Timestamp('2024-12-13 22:50:35.447906')
+    satelite:  one of 'goes16', 'goes18', 'goes19' (defaults to goes16)
+    product:  noaa product string from AWS list (defaults to ABI-L2-MCMIP)
+    domain: image domain one of "F" (full), "C" (conus), "M" (mesoscale)
+    download: True to save file, False to list path (defaults to True)
+    save_dir: optional directory to save image (defaults to ~/data
+
+    Returns
+    -------
+
+    
+    """
+    g = goes_nearesttime(
+        timestamp, satellite=satellite,product=product, domain=domain, 
+          return_as="xarray", save_dir = save_dir, download = download, overwrite = False
+    )
+    the_path = g.path[0]
+    return the_path
+
+def get_affine(goes_da):
+    resolutionx = np.mean(np.diff(goes_da.x))
+    resolutiony = np.mean(np.diff(goes_da.y))
+    ul_x = goes_da.x[0].data
+    ul_y = goes_da.y[0].data
+    goes_transform = affine.Affine(resolutionx, 0.0, ul_x, 0.0, resolutiony, ul_y)
+    return goes_transform
+
+def get_rowcol(affine_transform,x_coords,y_coords):
+    image_col, image_row = ~affine_transform * (x_coords,y_coords)
+    image_col = np.round(image_col).astype(np.int32)
+    image_row = np.round(image_row).astype(np.int32)
+    return image_col,image_row
