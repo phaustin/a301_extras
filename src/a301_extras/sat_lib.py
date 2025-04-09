@@ -253,7 +253,7 @@ def get_goes(
     Returns
     -------
 
-    
+    the_path: path to netcdf file written in the save_dir folder    
     """
     g = goes_nearesttime(
         timestamp, satellite=satellite,product=product, domain=domain, 
@@ -262,15 +262,36 @@ def get_goes(
     the_path = g.path[0]
     return the_path
 
-def get_affine(goes_da):
-    resolutionx = np.mean(np.diff(goes_da.x))
-    resolutiony = np.mean(np.diff(goes_da.y))
-    ul_x = goes_da.x[0].data
-    ul_y = goes_da.y[0].data
-    goes_transform = affine.Affine(resolutionx, 0.0, ul_x, 0.0, resolutiony, ul_y)
-    return goes_transform
+def get_affine(
+        sat_da: xarray.DataArray
+    ) -> affine.Affine:
+    """
+    Creates an affine transform given a raster xarray.DataArray with
+    x and y dimensions and coordinates
+    
+    Parameters
+    ----------
+    sat_da: satellite raster with x and y dimensions
 
-def get_rowcol(affine_transform,x_coords,y_coords):
+    Returns
+    -------
+
+    affine_transform: a affine transform with pixel dimensions and the ul corner
+    """
+    resolutionx = np.mean(np.diff(sat_da.x))
+    resolutiony = np.mean(np.diff(sat_da.y))
+    ul_x = sat_da.x[0].data
+    ul_y = sat_da.y[0].data
+    affine_transform = affine.Affine(resolutionx, 0.0, ul_x, 0.0, resolutiony, ul_y)
+    return affine_transform
+
+def get_rowcol(
+        affine_transform: affine.Affine,
+        x_coords: np.array,
+        y_coords: np.array)-> (int,int):
+    """
+    
+    """
     image_col, image_row = ~affine_transform * (x_coords,y_coords)
     image_col = np.round(image_col).astype(np.int32)
     image_row = np.round(image_row).astype(np.int32)
